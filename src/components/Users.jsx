@@ -1,29 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./Users.module.css";
+import debounce from "./debounce";
 
 function Users() {
 	const [users, setUsers] = useState([]);
 	const [user, setUser] = useState("");
+	const [userDetails, setUserDetails] = useState();
 
-	useEffect(() => {
-		fetch("https://jsonplaceholder.typicode.com/users")
-			.then((res) => res.json())
-			.then((data) => setUsers(data));
-	}, []);
+	// useEffect(() => {
+	// 	fetch("https://jsonplaceholder.typicode.com/users")
+	// 		.then((res) => res.json())
+	// 		.then((data) => setUsers(data));
+	// }, []);
 
+	let debouncedFetch = useCallback(
+		debounce(() => {
+			fetch("https://jsonplaceholder.typicode.com/users")
+				.then((res) => res.json())
+				.then((data) => setUsers(data));
+		}, 200),
+		[]
+	);
 
-	function inputHandler(event){
-		setUser(event.target.value)
+	function inputHandler(event) {
+		setUser(event.target.value);
+		debouncedFetch();
 	}
 
 	function selectHandler(event) {
 		setUser(event.target.innerText);
 	}
-	
+
 	function submitHandler() {
 		console.log("Search button clicked");
+		let details = users.filter((currentUser) => currentUser.name == user)[0];
+		setUserDetails(details);
 	}
-
 
 	return (
 		<div className={styles.container}>
@@ -51,6 +63,11 @@ function Users() {
 							})}
 				</div>
 				<button onClick={submitHandler}>Search</button>
+			</div>
+			<div className="info">
+				<h4>Name: {userDetails && userDetails.name}</h4>
+				<h4>Username : {userDetails && userDetails.username}</h4>
+				<h4>Email ID : {userDetails && userDetails.email}</h4>
 			</div>
 		</div>
 	);
