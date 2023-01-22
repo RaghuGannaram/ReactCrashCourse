@@ -1,0 +1,28 @@
+.container {
+  /* background-color: #4195a3; */
+  margin-top: -300px;
+}
+
+.inputArea{
+  display: flex;
+}
+
+.inputArea > input {
+  min-width: 400px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid ;
+}
+
+.dropdown {
+  position: absolute;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  margin-top: 40px;
+  width: 400px;
+}
+
+.dropdownItem {
+  margin: 5px;
+  background-color: #d0d0d0;
+}
