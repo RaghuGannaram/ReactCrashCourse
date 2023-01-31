@@ -1,0 +1,20 @@
+.container {
+  text-align: left;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  background-color: grey;
+  margin-top: 20px;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
